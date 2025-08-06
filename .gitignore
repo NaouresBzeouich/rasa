@@ -1,0 +1,6 @@
+models/
+model_cache/
+.rasa/
+*.h5
+*.db
+__pycache__/
