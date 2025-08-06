@@ -1,0 +1,70 @@
+version: "3.1"
+
+rules:
+
+# Basic conversational rules (these don't need employee info)
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Say hello anytime the user greets
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- rule: Handle fallback
+  steps:
+  - intent: nlu_fallback
+  - action: utter_default
+
+- rule: Respond to happy mood
+  steps:
+  - intent: mood_happy
+  - action: utter_mood_happy
+
+- rule: Respond to sad mood
+  steps:
+  - intent: mood_sad
+  - action: utter_mood_sad
+
+# Employee-related rules (all use the generic action)
+
+
+
+- rule: Predict employee absence for next month
+  steps:
+    - intent: predict_absence_next_month
+    - action: action_predict_absence_next_month
+
+- rule: Predict employee absence for next year
+  steps:
+    - intent: predict_absence_next_year
+    - action: action_predict_absence_next_year
+
+
+- rule: Predict absence duration by employee ID
+  steps:
+  - intent: predict_absence_duration
+  - action: action_predict_absence_duration
+
+- rule: Handle turnover requests
+  steps:
+  - intent: turnover_rate
+  - action: action_check_employee_info
+
+- rule: Handle team turnover requests
+  steps:
+  - intent: team_turnover
+  - action: action_check_employee_info
+
+- rule: Handle report requests
+  steps:
+  - intent: generate_report
+  - action: action_check_employee_info
+
+- rule: Show engagement score
+  steps:
+    - intent: engagement
+    - action: action_show_engagement_score
+

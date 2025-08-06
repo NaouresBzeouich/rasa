@@ -1,0 +1,109 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - mood_happy
+  - mood_sad
+  - engagement
+  - absence
+  - absence_duration
+  - turnover_rate
+  - team_turnover
+  - generate_report
+  - nlu_fallback
+  - predict_absence_next_month
+  - predict_absence_next_year
+  - predict_absence_duration
+
+entities:
+  - person
+  - time_period
+  - employee_id
+
+slots:
+  person:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: person
+  time_period:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: time_period
+  employee_id:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: employee_id  
+  previous_person:
+    type: text
+    influence_conversation: false  # Doesn't affect conversation flow
+    mappings:
+    - type: custom 
+
+
+    
+responses:
+
+  utter_greet:
+  - text: "Salut ! Comment ça va ?"
+  
+  utter_iamabot:
+  - text: "Je suis un assistant RH virtuel. Je peux vous aider avec les informations sur l'engagement, les absences, et les rapports des employés"
+  
+  utter_goodbye:
+  - text: "Au revoir ! À bientôt !"
+  
+  utter_mood_happy:
+  - text: "C'est génial d'entendre ça !"
+  
+  utter_mood_sad:
+  - text: "Je suis désolé d'entendre ça. Ça va aller mieux !"
+  
+  utter_engagement:
+  - text: "Le score d'engagement de {person} est de 85%."
+  - text: "L'engagement de {person} est bon."
+  
+  utter_absence:
+  - text: "{person} sera absent le mois prochain."
+  - text: "{person} prend un congé bientôt."
+  
+  utter_absence_duration:
+  - text: "La durée de l'absence de {person} est de {time_period}."
+  - text: "{person} sera absent pendant {time_period}."
+  
+  utter_turnover_rate:
+  - text: "Le taux de rotation de {person} est élevé."
+  - text: "{person} pourrait envisager de partir."
+  
+  utter_team_turnover:
+  - text: "Le taux de rotation de l'équipe est de 15%."
+  
+  utter_generate_report:
+  - text: "Je génère le rapport pour {person}..."
+  - text: "Création du rapport en cours..."
+  
+  utter_default:
+  - text: "Je ne comprends pas. Pouvez-vous reformuler ?"
+
+actions:
+  - action_check_employee_info
+  - utter_greet
+  - utter_absence
+  - utter_absence_duration
+  - utter_turnover_rate
+  - utter_team_turnover
+  - utter_generate_report
+  - utter_goodbye
+  - utter_default
+  - inform
+  - action_show_engagement_score
+  - action_predict_absence_next_month
+  - action_predict_absence_next_year
+  - action_predict_absence_duration
+  
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

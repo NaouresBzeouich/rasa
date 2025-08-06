@@ -1,0 +1,320 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - salut
+    - bonjour
+    - coucou
+    - hey
+    - heyy
+    - bonsoir
+    - salut ça va?
+    - bonjour, comment ça va?
+    - hello
+    - hi
+    - good morning
+    - bonne journée
+    - comment allez-vous?
+    - ça va bien?
+    - salut tout le monde
+    - bonjour à tous
+
+- intent: goodbye
+  examples: |
+    - au revoir
+    - bye
+    - à bientôt
+    - ciao
+    - adieu
+    - salut, à bientôt
+    - bonne soirée
+    - bonne journée
+    - see you
+    - goodbye
+    - à plus tard
+    - à plus
+    - bye bye
+    - au plaisir
+    - bonne continuation
+
+- intent: engagement
+  examples: |
+    - quel est le score d'engagement de [john](person) avec l'ID [12345](employee_id)?
+    - engagement de [john](person)
+    - quel est le score d'engagement de [sarah](person)?
+    - est-ce que [marie](person) est très engagée?
+    - engagement de l'ID [67890](employee_id)
+    - est-ce que l'ID [12345](employee_id) a un bon score d'engagement?
+    - le score d'engagement de [ahmed](person) est-il bon?
+    - engagement de [pierre](person) avec l'ID [54321](employee_id)
+    - comment est l'engagement de [ahmed](person)?
+    - est-ce que [pierre](person) est motivé?
+    - score d'engagement de [john](person) avec l'ID [112233](employee_id)
+    - [marie](person) a-t-elle un bon niveau d'engagement?
+    - quel est le score d'engagement de [paul](person)?
+    - l'ID [98765](employee_id) a-t-il un bon engagement?
+    - [luc](person) est-il satisfait de son travail?
+    - engagement de [alice](person)
+    - quel est l'engagement de [nicolas](person) avec l'ID [13579](employee_id)?
+    - est-ce que [emma](person) a un score d'engagement élevé?
+    - engagement de l'ID [24680](employee_id)
+    - comment va l'engagement de [benjamin](person)?
+    - [lucie](person) est-elle impliquée au travail?
+    - le score d'engagement de [arthur](person) est-il bon?
+    - quel est l'engagement de [julien](person) avec l'ID [192837](employee_id)?
+    - score d'engagement de [chloe](person)
+    - engagement de [franck](person) avec l'ID [384756](employee_id)
+    - [sophie](person) est-elle motivée au travail?
+    - quel est le score de [sebastien](person)?
+    - engagement de l'ID [112233](employee_id) pour [marie](person)?
+    - est-ce que [victor](person) a un score d'engagement faible?
+    - engagement de [laura](person) avec l'ID [578389](employee_id)?
+    - [sarah](person) est-elle engagée dans ses projets?
+    - score d'engagement de [vincent](person)
+    - est-ce que [robert](person) est satisfait de son travail?
+    - [george](person) a-t-il un bon score d'engagement?
+    - engagement de [samuel](person) avec l'ID [777888](employee_id)
+    - quel est le score d'engagement de [laure](person)?
+    - [mathilde](person) est-elle motivée?
+    - [leon](person) a-t-il un engagement élevé?
+    - score d'engagement de [celine](person)
+    - engagement de [edouard](person) avec l'ID [456789](employee_id)
+    - [marie](person) a-t-elle un bon score d'engagement avec l'ID [564738](employee_id)?
+    - engagement de [jeremy](person)
+    - [andre](person) est-il très engagé dans son travail?
+    - engagement de [anna](person) avec l'ID [239848](employee_id)
+    - est-ce que [julien](person) a un score d'engagement supérieur à [luc](person)?
+    - quel est le niveau d'engagement de [pauline](person)?
+    - engagement de [bernadette](person) avec l'ID [918273](employee_id)?
+    - [laura](person) a-t-elle un bon score d'engagement cette année?
+    - score d'engagement de [tom](person)
+    - [caroline](person) est-elle motivée dans ses projets?
+
+
+- intent: predict_absence_next_month
+  examples: |
+    - Est-ce que l'employé [1001](employee_id) sera absent le mois prochain ?
+    - Prédire l'absentéisme de [1002](employee_id) pour le mois à venir
+    - [1023](employee_id) sera-t-il absent le mois prochain ?
+    - Est-ce que l'employé [1015](employee_id) est prédit comme absent le mois prochain ?
+    - Peux-tu prévoir l'absence de l'employé [1009](employee_id) le mois prochain ?
+    - Penses-tu que [1050](employee_id) sera absent le mois prochain ?
+    - Quelle est la prédiction pour le mois prochain concernant l'employé [1070](employee_id) ?
+
+- intent: predict_absence_next_year
+  examples: |
+    - Est-ce que l'employé [1001](employee_id) sera absent l'année prochaine ?
+    - Prédire l'absentéisme de l'employé [1023](employee_id) pour l'année prochaine.
+    - Quelle est la prédiction d'absence pour l'employé [1010](employee_id) l'année prochaine ?
+    - Est-ce que [1005](employee_id) sera absent durant l'année à venir ?
+    - Penses-tu que l'employé [1012](employee_id) sera absent au cours de l'année prochaine ?
+    - Montre-moi la prédiction annuelle d'absence pour l'employé [1033](employee_id)
+    - Prévois l'absence de l'employé [1044](employee_id) sur l'année à venir
+    - Je veux savoir si [1050](employee_id) sera absent l'année prochaine
+    - Dis-moi si [1060](employee_id) sera présent ou absent l'année prochaine
+
+
+- intent: absence
+  examples: |
+    - [john](person) prendra-t-il un congé?
+    - est-ce que [john](person) est prévu pour être absent?
+    - [john](person) sera-t-il absent le mois prochain?
+    - john est-il en congé la semaine prochaine?
+    - [marie](person) est absente
+    - [ahmed](person) est absent
+    - est-ce que [zayneb](person) sera absente le mois prochain?
+    - est-ce que [zayneb](person) va prendre congé?
+    - [sami](person) prend un congé
+    - [pierre](person) est malade
+    - est-ce que [ahmed](person) est malade?
+    - est-ce que [ahmed](person) va venir?
+    - [john](person) n'est pas là
+    - où est [marie](person)?
+    - [ahmed](person) manque aujourd'hui
+    - [sarah](person) est en vacances
+    - [pierre](person) a pris sa journée
+    - [john](person) est en arrêt maladie
+    - [marie](person) s'absente demain
+    - [ahmed](person) ne viendra pas
+    - [sarah](person) est partie en congé
+    - [pierre](person) n'est pas au bureau
+    - [john](person) travaille-t-il aujourd'hui?
+    - [marie](person) vient-elle demain?
+    - présence de [ahmed](person)
+    - [sarah](person) sera-t-elle là?
+
+- intent: predict_absence_duration
+  examples: |
+    - Dis-moi la durée d'absence de l'employé [1001](employee_id) le mois prochain
+    - Quelle est la durée d'absence prévue pour l'employé [2345](employee_id) le mois prochain ?
+    - Prédire le nombre de jours d'absence de l'employé [987](employee_id) le mois prochain
+    - Durée d'absence de l'employé [456](employee_id) le mois prochain
+    - Dis-moi la durée d'absence prévue le mois prochain
+
+
+- intent: absence_duration
+  examples: |
+    - quelle est la durée de l'absence de [john](person)?
+    - combien de temps [john](person) sera-t-il absent?
+    - [john](person) a-t-il prévu un jour de congé?
+    - durée d'absence de [marie](person)
+    - pour quelle durée?
+    - combien de jours?
+    - combien de temps?
+    - quelle est la durée de cette absence?
+    - combien dure cette absence?
+    - pendant combien de temps [ahmed](person) sera absent?
+    - durée de congé de [sarah](person)
+    - [pierre](person) sera absent pendant combien de temps?
+    - longueur du congé de [john](person)
+    - [marie](person) prend combien de jours?
+    - période d'absence de [ahmed](person)
+    - [sarah](person) s'absente pour combien de temps?
+    - nombre de jours d'absence de [pierre](person)
+    - durée du congé maladie de [john](person)
+    - [marie](person) sera absente jusqu'à quand?
+    - fin de l'absence de [ahmed](person)
+    - retour de [sarah](person)
+    - quand [pierre](person) revient-il?
+    - date de retour de [john](person)
+    - [marie](person) reprend quand?
+
+- intent: turnover_rate
+  examples: |
+    - est-ce que [john](person) risque de quitter l'entreprise?
+    - quel est le taux de rotation de [marie](person)?
+    - [ahmed](person) va-t-il partir?
+    - est-ce que [ali](person) va quitter l'entreprise?
+    - est-ce que [sami](person) va quitter son poste?
+    - risque de départ de [pierre](person)
+    - [sarah](person) veut-elle démissionner?
+    - [john](person) pense-t-il à partir?
+    - [marie](person) cherche-t-elle un autre emploi?
+    - [ahmed](person) a-t-il l'intention de démissionner?
+    - probabilité de départ de [sarah](person)
+    - [pierre](person) va-t-il nous quitter?
+    - [john](person) est-il fidèle à l'entreprise?
+    - rétention de [marie](person)
+    - stabilité de [ahmed](person)
+    - [sarah](person) restera-t-elle?
+    - fidélité de [pierre](person)
+    - [john](person) changera-t-il d'entreprise?
+    - [marie](person) est-elle satisfaite?
+    - loyauté de [ahmed](person)
+    - [sarah](person) compte-t-elle rester?
+    - avenir de [pierre](person) dans l'entreprise
+    - [john](person) envisage-t-il de partir?
+
+- intent: team_turnover
+  examples: |
+    - est-ce que l'équipe a un faible taux de fidélité?
+    - quel est le taux de rotation de l'équipe?
+    - l'équipe reste-t-elle stable?
+    - rotation de l'équipe
+    - fidélité de l'équipe
+    - stabilité de l'équipe
+    - taux de départ de l'équipe
+    - rétention de l'équipe
+    - l'équipe est-elle fidèle?
+    - combien de personnes quittent l'équipe?
+    - départs dans l'équipe
+    - turnover de l'équipe
+    - l'équipe change-t-elle souvent?
+    - renouvellement de l'équipe
+
+- intent: generate_report
+  examples: |
+    - crée un rapport pour [john](person)
+    - génère un rapport pour [marie](person)
+    - fait-moi un rapport pour [ahmed](person)
+    - rapport de [sarah](person)
+    - créer rapport [pierre](person)
+    - fait moi un rapport
+    - génère un rapport
+    - prépare un rapport pour [john](person)
+    - établis un rapport sur [marie](person)
+    - rédige un rapport de [ahmed](person)
+    - document pour [sarah](person)
+    - fais le rapport de [pierre](person)
+    - rapport complet de [john](person)
+    - analyse de [marie](person)
+    - bilan de [ahmed](person)
+    - synthèse pour [sarah](person)
+    - résumé de [pierre](person)
+    - dossier de [john](person)
+    - fiche de [marie](person)
+
+- intent: mood_happy
+  examples: |
+    - je vais bien
+    - super
+    - génial
+    - parfait
+    - excellent
+    - je suis content
+    - ça va très bien
+    - tout va bien
+    - je suis heureux
+    - formidable
+    - magnifique
+    - fantastique
+    - merveilleux
+    - je me sens bien
+    - ça roule
+
+- intent: mood_sad
+  examples: |
+    - ça va mal
+    - je suis triste
+    - je suis déprimé
+    - ça ne va pas
+    - je suis abattu
+    - pas terrible
+    - difficile
+    - compliqué
+    - dur
+    - pénible
+    - fatigué
+    - démotivé
+    - découragé
+    - morose
+
+- intent: nlu_fallback
+  examples: |
+    - je ne comprends pas
+    - quoi?
+    - hein?
+    - pardon?
+    - comment?
+    - que veux-tu dire?
+    - je ne saisis pas
+    - unclear
+    - ???
+
+
+- intent: inform
+  examples: |
+    - [john](person)
+    - [marie](person)  
+    - [ahmed](person)
+    - [sarah](person)
+    - [pierre](person)
+    - [123](employee_id)
+    - [456](employee_id)
+    - [789](employee_id)
+    - [emp001](employee_id)
+    - [emp002](employee_id)
+    - son nom est [john](person)
+    - c'est [marie](person)
+    - il s'appelle [ahmed](person)
+    - elle s'appelle [sarah](person)
+    - [pierre](person) s'il vous plaît
+    - l'id est [123](employee_id)
+    - son identifiant est [456](employee_id)
+    - le numéro est [789](employee_id)
+    - c'est le [emp001](employee_id)
+    - voici l'id [emp002](employee_id)
+
+
+

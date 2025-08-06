@@ -1,0 +1,41 @@
+recipe: default.v1
+assistant_id: phi3_rasa_bot
+language: fr  # French language support
+pipeline:
+  - name: WhitespaceTokenizer
+  - name: RegexFeaturizer
+  - name: LexicalSyntacticFeaturizer
+  - name: CountVectorsFeaturizer
+  - name: CountVectorsFeaturizer
+    analyzer: char_wb
+    min_ngram: 1
+    max_ngram: 4
+  # Add entity extractors BEFORE the intent classifier
+  - name: DIETClassifier
+    epochs: 100
+    constrain_similarities: true
+    model_confidence: softmax
+    entity_recognition: true
+    intent_classification: false  # We use Phi-3 for intent classification
+  - name: RegexEntityExtractor
+    # Define regex patterns for common entities
+    case_sensitive: false
+  - name: EntitySynonymMapper
+  # Use the improved intent classifier
+  - name: "bert_classifier.Phi3IntentClassifier"
+    model_name: "microsoft/Phi-3-mini-4k-instruct"
+    use_quantization: true
+    cache_dir: "./model_cache"
+    attn_implementation: "eager"
+    use_cache: false
+policies:
+  - name: MemoizationPolicy
+  - name: RulePolicy
+  - name: UnexpecTEDIntentPolicy
+    max_history: 5
+    epochs: 100
+    constrain_similarities: true
+  - name: TEDPolicy
+    max_history: 5
+    epochs: 100
+    constrain_similarities: true
