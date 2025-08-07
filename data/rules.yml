@@ -35,18 +35,18 @@ rules:
 - rule: Predict employee absence for next month
   steps:
     - intent: predict_absence_next_month
-    - action: action_predict_absence_next_month
+    - action: action_check_employee_info
 
 - rule: Predict employee absence for next year
   steps:
     - intent: predict_absence_next_year
-    - action: action_predict_absence_next_year
+    - action: action_check_employee_info
 
 
 - rule: Predict absence duration by employee ID
   steps:
   - intent: predict_absence_duration
-  - action: action_predict_absence_duration
+  - action: action_check_employee_info
 
 - rule: Handle turnover requests
   steps:
@@ -66,5 +66,5 @@ rules:
 - rule: Show engagement score
   steps:
     - intent: engagement
-    - action: action_show_engagement_score
+    - action: action_check_employee_info
 

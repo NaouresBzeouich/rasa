@@ -21,9 +21,26 @@ stories:
 # Simple one-step stories for each intent
 
 
-- story: absence inquiry
+
+- story: Predict employee absence for next month
   steps:
-  - intent: absence
+    - intent: predict_absence_next_month
+    - action: action_check_employee_info
+
+- story: Predict employee absence for next year
+  steps:
+    - intent: predict_absence_next_year
+    - action: action_check_employee_info
+
+- story: Show engagement score
+  steps:
+    - intent: engagement
+    - action: action_check_employee_info
+
+    
+- story: Predict absence duration by employee ID
+  steps:
+  - intent: predict_absence_duration
   - action: action_check_employee_info
 
 - story: absence duration inquiry

@@ -1,4 +1,3 @@
-models/
 model_cache/
 .rasa/
 *.h5

@@ -22,32 +22,52 @@ class ActionCheckEmployeeInfo(Action):
     def find_employee_by_name(self, df, person_name):
         """
         Find employee by first name, last name, or full name
-        Returns list of matching employees
+        Returns list of matching employees (FIXED: Remove duplicates)
         """
         if df is None:
             return []
-        
+    
         person_name = person_name.lower().strip()
         matches = []
-        
+        seen_ids = set()  # To avoid duplicates
+    
         for _, row in df.iterrows():
+            employee_id = str(row['Employee ID'])
+        
+        # Skip if we've already added this employee
+            if employee_id in seen_ids:
+                continue
+            
             first_name = str(row['FirstName']).lower().strip()
             last_name = str(row['LastName']).lower().strip()
             full_name = f"{first_name} {last_name}"
-            
-            # Check if person_name matches first name, last name, or full name
+        
+        # IMPROVED: More precise matching logic
+            match_found = False
+        
+        # Exact matches (most reliable)
             if (person_name == first_name or 
                 person_name == last_name or 
-                person_name == full_name or
-                person_name in full_name):
+                person_name == full_name):
+                match_found = True
+        
+        # Partial matches (be more careful)
+            elif len(person_name) >= 3:  # Only for names 3+ characters
+            # Check if it starts with the person_name (for partial matches like "sar" -> "sarah")
+                if (first_name.startswith(person_name) or 
+                    last_name.startswith(person_name)):
+                    match_found = True
+        
+            if match_found:
                 matches.append({
-                    'employee_id': str(row['Employee ID']),
+                    'employee_id': employee_id,
                     'first_name': row['FirstName'],
                     'last_name': row['LastName'],
                     'full_name': f"{row['FirstName']} {row['LastName']}",
                     'email': row['ADEmail']
                 })
-        
+                seen_ids.add(employee_id)
+    
         return matches
     
     def validate_employee_id(self, df, employee_id, person_name):
@@ -202,9 +222,7 @@ class ActionCheckEmployeeInfo(Action):
             
             # Success - display employee info
             emp_info = result
-            dispatcher.utter_message(
-                text=f"✅ Employé confirmé: {emp_info['full_name']} (ID: {emp_info['employee_id']})"
-            )
+            
         else:
             # Fallback validation if CSV can't be loaded
             if not employee_id.isdigit():
@@ -212,10 +230,8 @@ class ActionCheckEmployeeInfo(Action):
                 return [SlotSet("employee_id", None)]
             
             dispatcher.utter_message(text=f"Informations pour {person} (ID: {employee_id}):")
-        
         # Continue with the original action
         target_action = intent_to_action.get(last_intent, 'utter_default')
-        
         return [
             SlotSet("previous_person", person),
             FollowupAction(target_action)
@@ -241,7 +257,7 @@ class ActionShowEngagementScore(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        employee_id = next(tracker.get_latest_entity_values("employee_id"), None)
+        employee_id = tracker.get_slot("employee_id")
         if employee_id is None:
             dispatcher.utter_message(text="Veuillez fournir un identifiant d'employé afin que je puisse vérifier le score d'engagement.")
             return []
@@ -338,7 +354,8 @@ class ActionPredictAbsenceNextMonth(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        employee_id = next(tracker.get_latest_entity_values("employee_id"), None)
+        employee_id = tracker.get_slot("employee_id")
+        person = tracker.get_slot("person")
         if employee_id is None:
             dispatcher.utter_message(text="Veuillez fournir un identifiant d'employé pour vérifier la prédiction d'absence.")
             return []
@@ -400,7 +417,8 @@ class ActionPredictAbsence(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        employee_id = next(tracker.get_latest_entity_values("employee_id"), None)
+        employee_id = tracker.get_slot("employee_id")
+        person = tracker.get_slot("person")
         if employee_id is None:
             dispatcher.utter_message(text="Veuillez fournir un identifiant d'employé pour vérifier la prédiction d'absence.")
             return []
@@ -501,6 +519,7 @@ class ActionPredictAbsenceDurationByID(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         employee_id = tracker.get_slot("employee_id")
+        person = tracker.get_slot("person")
 
         if not employee_id:
             dispatcher.utter_message(text="Veuillez fournir un identifiant d'employé valide, s'il vous plaît.")
