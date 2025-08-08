@@ -103,6 +103,7 @@ actions:
   - action_predict_absence_next_month
   - action_predict_absence_next_year
   - action_predict_absence_duration
+  - action_predict_turnover
   
 session_config:
   session_expiration_time: 60

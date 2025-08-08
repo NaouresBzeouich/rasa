@@ -342,8 +342,11 @@ nlu:
       - date de retour de [john](person)
       - [marie](person) reprend quand?
 
+ 
+ 
   - intent: turnover_rate
     examples: |
+
       - est-ce que [john](person) risque de quitter l'entreprise?
       - quel est le taux de rotation de [marie](person)?
       - [ahmed](person) va-t-il partir?
@@ -363,47 +366,27 @@ nlu:
       - fidélité de [pierre](person)
       - [john](person) changera-t-il d'entreprise?
       - [marie](person) est-elle satisfaite?
-      - loyauté de [ahmed](person)
-      - [sarah](person) compte-t-elle rester?
-      - avenir de [pierre](person) dans l'entreprise
-      - [john](person) envisage-t-il de partir?
-      - [sophie](person) quittera-t-elle l'entreprise bientôt?
-      - taux de rétention pour [lucie](person)
-      - [benjamin](person) est-il stable dans l'entreprise?
-      - [marie](person) va-t-elle changer de travail cette année?
-      - quel est le taux de rotation pour [alain](person)?
-      - [sara](person) sera-t-elle une employée fidèle cette année?
-      - [michel](person) souhaite-t-il rester dans l'entreprise?
-      - taux de fidélité de [pierre](person)
-      - [luc](person) changera-t-il de poste cette année?
-      - taux de départ pour [robert](person)
-      - [george](person) compte-t-il déménager?
+      - loyauté de [1045](employee_id)
+      - [1030](employee_id) compte-t-il rester?
+      - avenir de [1012](employee_id) dans l'entreprise
+      - [1058](employee_id) envisage-t-il de partir?
+      - [1077](employee_id) quittera-t-elle l'entreprise bientôt?
+      - taux de rétention pour [1042](employee_id)
+      - [1089](employee_id) est-il stable dans l'entreprise?
+      - [1020](employee_id) va-t-elle changer de travail cette année?
+      - quel est le taux de rotation pour [1066](employee_id)?
+      - [1010](employee_id) sera-t-elle une employée fidèle cette année?
+      - [1063](employee_id) souhaite-t-il rester dans l'entreprise?
+      - taux de fidélité de [1041](employee_id)
+      - [1024](employee_id) changera-t-il de poste cette année?
+      - taux de départ pour [1090](employee_id)
+      - [1080](employee_id) compte-t-il déménager?
       - taux de turnover de l'entreprise pour [2019]
-      - [lucie](person) est-elle satisfaite de ses conditions de travail?
-      - [sophie](person) réfléchit-elle à quitter son poste?
-      - quelle est la probabilité de départ de [julie](person)?
-      - taux de rétention de l'équipe de [michaela](person)?
-      - [thierry](person) va-t-il quitter pour un autre poste?
-      - [laurence](person) va-t-elle se reconvertir professionnellement?
-      - [claire](person) a-t-elle des projets de départ?
+      - [1061](employee_id) est-elle satisfaite de ses conditions de travail?
+      - [1044](employee_id) réfléchit-elle à quitter son poste?
+      - quelle est la probabilité de départ de [1099](employee_id)?
+      - taux de rétention de l'équipe de [1035](employee_id)?
 
-
-  - intent: team_turnover
-    examples: |
-      - est-ce que l'équipe a un faible taux de fidélité?
-      - quel est le taux de rotation de l'équipe?
-      - l'équipe reste-t-elle stable?
-      - rotation de l'équipe
-      - fidélité de l'équipe
-      - stabilité de l'équipe
-      - taux de départ de l'équipe
-      - rétention de l'équipe
-      - l'équipe est-elle fidèle?
-      - combien de personnes quittent l'équipe?
-      - départs dans l'équipe
-      - turnover de l'équipe
-      - l'équipe change-t-elle souvent?
-      - renouvellement de l'équipe
 
   - intent: generate_report
     examples: |

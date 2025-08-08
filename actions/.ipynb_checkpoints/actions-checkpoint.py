@@ -124,7 +124,7 @@ class ActionCheckEmployeeInfo(Action):
             'predict_absence_next_month': 'action_predict_absence_next_month', 
             'predict_absence_duration': 'action_predict_absence_duration',
             'predict_absence_next_year': 'action_predict_absence_next_year',
-            'team_turnover': 'utter_team_turnover',
+            'turnover_rate':'action_predict_turnover',
             'generate_report': 'utter_generate_report'
         }
         
@@ -554,4 +554,91 @@ class ActionPredictAbsenceDurationByID(Action):
 
         return []
 
+
+
+from typing import Any, Text, Dict, List
+from rasa_sdk import Action, Tracker
+from rasa_sdk.executor import CollectingDispatcher
+import pandas as pd
+import numpy as np
+import joblib
+import os
+
+class ActionPredictTurnover(Action):
+    def name(self) -> Text:
+        return "action_predict_turnover"
+
+    def __init__(self):
+        model_path = "actions/turnover_model.pkl"
+        data_path = "data/turnover_data.csv"
+
+        # Load model
+        if os.path.exists(model_path):
+            self.model = joblib.load(model_path)
+        else:
+            raise FileNotFoundError(f"Model file not found at {model_path}")
+
+        # Load dataset for employee info
+        if os.path.exists(data_path):
+            self.data = pd.read_csv(data_path)
+        else:
+            raise FileNotFoundError(f"Employee data not found at {data_path}")
+
+        # Preprocess dataset the same way as in training
+        drop_cols = ["Employee ID", "FirstName", "LastName", "StartDate", "ExitDate", 
+                     "ADEmail", "TerminationDescription", "Supervisor", "TurnoverScore"]
+        self.data_features = pd.get_dummies(
+            self.data.drop(columns=drop_cols, errors='ignore'),
+            drop_first=True
+        )
+        self.feature_names = self.data_features.columns.tolist()
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        employee_id = tracker.get_slot("employee_id")
+        person = tracker.get_slot("person")
+
+        if not employee_id:
+            dispatcher.utter_message(text="Please provide a valid employee ID.")
+            return []
+
+        try:
+            employee_id = int(employee_id)
+        except ValueError:
+            dispatcher.utter_message(text="Employee ID must be numeric.")
+            return []
+
+        emp_data = self.data[self.data["Employee ID"] == employee_id]
+        if emp_data.empty:
+            dispatcher.utter_message(text=f"No data found for employee ID {employee_id}.")
+            return []
+
+        # Prepare features for prediction
+        emp_features = emp_data.drop(columns=[
+            "Employee ID", "FirstName", "LastName", "StartDate", "ExitDate", 
+            "ADEmail", "TerminationDescription", "Supervisor", "TurnoverScore"
+        ], errors='ignore')
+        emp_features_encoded = pd.get_dummies(emp_features, drop_first=True)
+
+        # Align columns with training set
+        emp_features_encoded = emp_features_encoded.reindex(columns=self.feature_names, fill_value=0)
+
+        # Predict turnover score
+        score = self.model.predict(emp_features_encoded)[0]
+
+        # Decide resignation risk (threshold: score >= 0.5 → resign)
+        resign = score >= 0.5  # adjust threshold based on your data scale
+
+        if resign:
+            dispatcher.utter_message(
+                text=f"⚠ Employee {employee_id} is likely to resign (score: {score:.2f})."
+            )
+        else:
+            dispatcher.utter_message(
+                text=f"✅ Employee {employee_id} is likely to stay (score: {score:.2f})."
+            )
+
+        return []
 
